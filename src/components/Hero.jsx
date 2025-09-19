@@ -48,7 +48,7 @@ const Hero = () => {
 
     // === Video Scroll Animation ===
     // Timeline that animates the video as you scroll
-    const startValue = isMobile ? 'top 5%' : 'top 10%'
+    const startValue = isMobile ? 'top 5%' : 'top 0%'
     const endValue = isMobile ? '120% top' : 'bottom top'
 
     const tl = gsap.timeline({
@@ -107,14 +107,14 @@ videoRef.current.onloadedmetadata = () => {
       </section>
 
       {/* Video behind the hero */}
-      <div className="video inset-0 -z-10">
+      <div className="video inset-0 -z-10 ">
         <video
           ref={videoRef}
           src="./videos/output.mp4"
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover "
         />
       </div>
     </>
