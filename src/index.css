@@ -44,12 +44,10 @@ body {
 }
 
 @utility radial-gradient {
-    background: radial-gradient(
-            circle at center,
+    background: radial-gradient(circle at center,
             #434343 0%,
             #000 50%,
-            transparent 100%
-    );
+            transparent 100%);
 }
 
 @utility masked-img {
@@ -86,6 +84,7 @@ body {
 
     .noisy {
         @apply absolute inset-0 size-full bg-[url("/images/noise.png")];
+        background: linear-gradient(90deg, rgb(10, 10, 10) 0%, rgba(66, 64, 64, 0.212) 50%, rgb(22, 22, 24) 100%);
     }
 
     #hero {
@@ -218,7 +217,7 @@ body {
         .top-grid {
             @apply grid grid-cols-1 xl:grid-cols-12 gap-5 mb-5 md:px-0 px-5;
 
-            > div {
+            >div {
                 @apply rounded-3xl overflow-hidden h-72 relative;
             }
 
@@ -230,7 +229,7 @@ body {
         .bottom-grid {
             @apply grid grid-cols-1 md:grid-cols-12 gap-5 md:px-0 px-5;
 
-            > div {
+            >div {
                 @apply rounded-3xl overflow-hidden h-72 relative;
             }
 
