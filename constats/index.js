@@ -132,7 +132,7 @@ const socials = [
 	icon: "/images/fb.png",
 	url: "#",
  },
-];
+]
 
 const sliderLists = [
  {
