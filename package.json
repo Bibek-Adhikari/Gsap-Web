@@ -13,9 +13,11 @@
     "@gsap/react": "^2.1.2",
     "@tailwindcss/vite": "^4.1.13",
     "gsap": "^3.13.0",
+    "lucide-react": "^0.562.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-responsive": "^10.0.1",
+    "react-router-dom": "^7.11.0",
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
@@ -23,6 +25,7 @@
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",
+    "baseline-browser-mapping": "^2.9.11",
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
