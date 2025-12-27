@@ -82,7 +82,7 @@ const ProjectCard = ({ project, className = '' }) => {
         <h3 className="text-2xl font-bold text-teal-400 mb-2">
           {project.title}
         </h3>
-        <p className="text-white/70 text-sm mb-4 flex-grow">
+        <p className="text-zinc-600 dark:text-white/70 text-sm mb-4 flex-grow">
           {project.desc}
         </p>
 
@@ -104,7 +104,7 @@ const ProjectCard = ({ project, className = '' }) => {
             href={project.liveLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center text-sm font-medium text-white hover:text-teal-400 transition"
+            className="flex items-center text-sm font-medium text-zinc-800 dark:text-white hover:text-teal-400 transition"
           >
             <Link className="h-4 w-4 mr-1" />
             Live Demo
@@ -113,7 +113,7 @@ const ProjectCard = ({ project, className = '' }) => {
             href={project.githubLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center text-sm font-medium text-white hover:text-teal-400 transition"
+            className="flex items-center text-sm font-medium text-zinc-800 dark:text-white hover:text-teal-400 transition"
           >
             <Github className="h-4 w-4 mr-1" />
             GitHub
@@ -130,14 +130,14 @@ const Projects = () => {
 
 
   return (
-    <section className="min-h-screen bg-zinc-950 text-white px-6 md:px-16 py-20" id='projects'>
+    <section className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white px-6 md:px-16 py-20" id='projects'>
 
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-12 projects-header">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-teal-400">
           Projects
         </h1>
-        <p className="mt-4 text-white/70 max-w-2xl">
+        <p className="mt-4 text-zinc-600 dark:text-white/70 max-w-2xl">
           A selection of projects that showcase my skills in frontend
           development, UI design, and interactive experiences.
         </p>

@@ -35,7 +35,7 @@ const Contact = () => {
 
       // Animation for Copy Success Message
       if (isCopied) {
-        gsap.fromTo(copyMessageRef.current, 
+        gsap.fromTo(copyMessageRef.current,
           { scale: 0.8, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' }
         );
@@ -49,12 +49,12 @@ const Contact = () => {
     try {
       await navigator.clipboard.writeText(CONTACT_EMAIL);
       setIsCopied(true);
-      
+
       // Reset the copied state after a short delay
       setTimeout(() => {
         setIsCopied(false);
       }, 2000);
-      
+
     } catch (err) {
       console.error('Failed to copy text: ', err);
       // Optional: Add a fallback if clipboard API fails
@@ -62,48 +62,48 @@ const Contact = () => {
   };
 
   return (
-    <section 
+    <section
       ref={contactRef}
-      className="min-h-screen bg-zinc-950 text-white px-6 md:px-16 py-20"
+      className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white px-6 md:px-16 py-20"
       id='contact'
     >
-      
+
       {/* Header */}
       <div className="max-w-6xl mx-auto mb-16 contact-header">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-teal-400">
           Contact
         </h1>
-        <p className="mt-4 text-white/70 max-w-2xl">
-          Have a project, idea, or opportunity in mind?  
+        <p className="mt-4 text-zinc-600 dark:text-white/70 max-w-2xl">
+          Have a project, idea, or opportunity in mind?
           Let’s connect and build something meaningful.
         </p>
       </div>
 
       {/* Content */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        
+
         {/* Left – Info */}
         <div className="border border-teal-400/20 p-6 rounded-lg contact-box">
           <h2 className="text-2xl font-semibold mb-4 text-teal-300">
             Get in Touch
           </h2>
 
-          <p className="text-white/70 mb-6 leading-relaxed">
+          <p className="text-zinc-600 dark:text-white/70 mb-6 leading-relaxed">
             I’m open to internships, freelance work, collaborations,
             and learning opportunities. Feel free to reach out.
           </p>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-zinc-600 dark:text-white/80">
             <p className="flex items-center">
-              <span className="text-white/50 w-20">Name:</span> Bibek Adhikari
+              <span className="text-zinc-500 dark:text-white/50 w-20">Name:</span> Bibek Adhikari
             </p>
             <p className="flex items-center">
-              <span className="text-white/50 w-20">Role:</span> Frontend Developer
+              <span className="text-zinc-500 dark:text-white/50 w-20">Role:</span> Frontend Developer
             </p>
-            
+
             {/* Email with Copy Feature */}
             <div className="flex items-start">
-              <span className="text-white/50 w-20 pt-1">Email:</span>{' '}
+              <span className="text-zinc-500 dark:text-white/50 w-20 pt-1">Email:</span>{' '}
               <div className="relative flex items-center group">
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
@@ -112,7 +112,7 @@ const Contact = () => {
                 >
                   {CONTACT_EMAIL}
                 </a>
-                
+
                 {/* Copy Button */}
                 <button
                   onClick={handleCopyEmail}

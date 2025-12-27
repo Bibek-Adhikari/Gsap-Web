@@ -94,36 +94,36 @@ const Home = () => {
     return (
         <section
             ref={homeRef}
-            className="relative min-h-screen flex items-center justify-center text-white overflow-hidden bg-zinc-950 py-32"
+            className="relative min-h-screen flex items-center justify-center text-zinc-900 dark:text-white overflow-hidden bg-white dark:bg-zinc-950 py-32"
             id='home'
         >
 
             {/* --- Animated Background Icons (Random Flow Structure) --- */}
-<div className="absolute inset-0 z-0 flex items-center justify-center">
+            <div className="absolute inset-0 z-0 flex items-center justify-center">
 
-    {[...Array(7)].map((_, index) => (
-        <img
-            key={index}
-            ref={el => settingRefs.current[index] = el}
-            src={settingIconSrc}
-            alt={`Animated Setting Icon ${index + 1}`}
-            // CORRECTED: Added the required Tailwind classes here:
-            className={`absolute 
+                {[...Array(7)].map((_, index) => (
+                    <img
+                        key={index}
+                        ref={el => settingRefs.current[index] = el}
+                        src={settingIconSrc}
+                        alt={`Animated Setting Icon ${index + 1}`}
+                        // CORRECTED: Added the required Tailwind classes here:
+                        className={`absolute 
                 // Core Tailwind classes to prevent selection and drag
                 select-none pointer-events-none 
                 // Vary size slightly
                 ${index === 0 ? 'w-24 h-24' : index === 3 ? 'w-36 h-36' : 'w-28 h-28'} 
                 text-teal-500 opacity-30`}
-            style={{
-                filter: 'grayscale(200%)',
-                opacity: 0.05,
-                // Initial small offset to scatter them slightly before GSAP takes over
-                transform: `translateX(${index * 5}px) translateY(${-index * 5}px)`
-            }}
-        />
-    ))}
-</div>
-{/* --- End Animated Background Icons --- */}
+                        style={{
+                            filter: 'grayscale(200%)',
+                            opacity: 0.05,
+                            // Initial small offset to scatter them slightly before GSAP takes over
+                            transform: `translateX(${index * 5}px) translateY(${-index * 5}px)`
+                        }}
+                    />
+                ))}
+            </div>
+            {/* --- End Animated Background Icons --- */}
 
 
             {/* Content Wrapper */}
@@ -134,7 +134,7 @@ const Home = () => {
                         Hi, I’m <span className="text-teal-400">Bibek</span>
                     </h1>
 
-                    <p className="hero-sub mt-4 text-lg text-white/80 max-w-xl mx-auto md:mx-0">
+                    <p className="hero-sub mt-4 text-lg text-zinc-600 dark:text-white/80 max-w-xl mx-auto md:mx-0">
                         A passionate web developer focused on building smooth, modern
                         interfaces using <strong>JavaScript</strong>, <strong>React</strong>, <strong>ReactNative</strong>, <strong>GSAP</strong>, and
                         clean UI principles.
@@ -164,7 +164,7 @@ const Home = () => {
             </div>
 
             {/* Scroll Indicator */}
-            <div className="absolute bottom-12 text-sm text-white/70 z-10 animate-pulse" ref={imageRef}>
+            <div className="absolute bottom-12 text-sm text-zinc-500 dark:text-white/70 z-10 animate-pulse" ref={imageRef}>
                 ↓ Scroll Down
             </div>
         </section>

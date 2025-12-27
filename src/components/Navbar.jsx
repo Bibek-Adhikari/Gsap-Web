@@ -4,7 +4,8 @@ import { useGSAP } from '@gsap/react';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 // Make sure to import all required icons, including Twitter
-import { Menu, X, Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Mail, Twitter, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 // Register plugins globally (GSAP best practice)
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -24,6 +25,7 @@ const Navbar = () => {
   const linksRef = useRef([]);
   const menuRef = useRef(null);
   const socialRef = useRef(null); // Ref for desktop social links
+  const { theme, toggleTheme } = useTheme();
 
   // Function to handle link clicks (desktop and mobile)
   const handleLinkClick = (e, targetId) => {
@@ -73,9 +75,18 @@ const Navbar = () => {
       });
 
       // --- Scroll Blur Effect ---
+      // Modified for theme compatibility - using hex with opacity instead of rgba black for better light mode look? 
+      // Actually sticking to the dark glassmorphism look even in light mode might be jarring.
+      // Let's use a CSS class or variable for the background in CSS instead of GSAP 'backgroundColor' if possible,
+      // OR just conditionally set it. For now, I'll stick to a darkish blur for consistency or update it to rely on CSS variables?
+      // GSAP overwrites inline styles. Let's try to trust the CSS classes primarily, but GSAP here is doing the scroll effect.
+      // Let's keep the dark tint for now as it often looks good on glassmorphism, or switch to white for light mode.
+      const scrollBg = theme === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.8)';
+
       gsap.to(navRef.current, {
-        backgroundColor: 'rgba(0,0,0,0.6)',
+        backgroundColor: scrollBg,
         backdropFilter: 'blur(20px)',
+        color: theme === 'dark' ? 'white' : 'black', // Animate text color too?
         scrollTrigger: {
           trigger: document.body,
           start: 'top -80',
@@ -112,7 +123,7 @@ const Navbar = () => {
       });
 
     },
-    { scope: navRef }
+    { scope: navRef, dependencies: [theme] } // Re-run when theme changes
   );
 
   // --- Mobile Menu Open/Close Animation (Simplified duration for quicker feedback) ---
@@ -153,7 +164,7 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-16 py-5 text-white border-b border-white/10 backdrop-blur-custom"
+      className={`fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-16 py-5 border-b backdrop-blur-custom transition-colors duration-300 ${theme === 'dark' ? 'border-white/10 text-white' : 'border-black/10 text-black'}`}
     >
       <a href="/" onClick={(e) => { e.preventDefault(); handleLinkClick(e, 'home'); }}>
         <h2 className="text-3xl sm:text-4xl md:text-2xl font-bold text-teal-500 nav-logo">
@@ -175,7 +186,7 @@ const Navbar = () => {
             <li
               key={index}
               ref={(el) => (linksRef.current[index] = el)}
-              className="cursor-pointer relative text-white/80 hover:text-white desktop-link"
+              className={`cursor-pointer relative hover:text-teal-400 desktop-link transition-colors ${theme === 'dark' ? 'text-white/80' : 'text-black/80'}`}
             >
               <a
                 href={`#${link.toLowerCase()}`}
@@ -188,7 +199,14 @@ const Navbar = () => {
         </ul>
 
         {/* Desktop Social Icons (New Addition) */}
-        <div ref={socialRef} className="flex items-center gap-4 border-l border-white/10 pl-6">
+        <div ref={socialRef} className={`flex items-center gap-4 border-l pl-6 ${theme === 'dark' ? 'border-white/10' : 'border-black/10'}`}>
+          <button
+            onClick={toggleTheme}
+            className={`p-2 rounded-full transition-colors ${theme === 'dark' ? 'hover:bg-white/10 text-yellow-400' : 'hover:bg-black/10 text-zinc-950'}`}
+            aria-label="Toggle Theme"
+          >
+            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
           {socialLinks.map((social, index) => (
             <a
               key={index}
@@ -196,7 +214,7 @@ const Navbar = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
-              className="text-white/80 hover:text-teal-400 transition"
+              className={`transition hover:text-teal-400 ${theme === 'dark' ? 'text-white/80' : 'text-black/80'}`}
             >
               <social.icon size={20} />
             </a>
@@ -206,24 +224,35 @@ const Navbar = () => {
       </div>
 
       {/* Hamburger Menu Button (Visible on small screens) */}
-      <button
-        className="md:hidden text-teal-400 z-50"
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-      >
-        {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-      </button>
+      <div className="flex items-center gap-4 md:hidden">
+        <button
+          onClick={toggleTheme}
+          className={`p-1 rounded-full transition-colors z-50 ${theme === 'dark' ? 'text-yellow-400' : 'text-zinc-950'}`}
+          aria-label="Toggle Theme"
+        >
+          {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
+        </button>
+
+        <button
+          className="text-teal-400 z-50"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        >
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
+
 
       {/* Mobile Menu Overlay */}
       <div
         ref={menuRef}
-        className={`fixed top-[75px] left-0 w-full h-[calc(100vh-75px)] bg-zinc-950/95 backdrop-blur-xl z-40 md:hidden flex flex-col items-center pt-10 transition-transform duration-0 ease-in-out -translate-y-full opacity-0 pointer-events-none`}
+        className={`fixed top-[75px] left-0 w-full h-[calc(100vh-75px)] ${theme === 'dark' ? 'bg-zinc-950/95' : 'bg-white/95'} backdrop-blur-xl z-40 md:hidden flex flex-col items-center pt-10 transition-transform duration-0 ease-in-out -translate-y-full opacity-0 pointer-events-none`}
       >
         <ul className="flex flex-col items-center space-y-8 text-2xl font-semibold w-full">
           {navLinks.map((link, index) => (
             <li
               key={index}
-              className="mobile-link text-white hover:text-teal-400 transition"
+              className={`mobile-link hover:text-teal-400 transition ${theme === 'dark' ? 'text-white' : 'text-black'}`}
             >
               <a
                 href={`#${link.toLowerCase()}`}
@@ -236,7 +265,7 @@ const Navbar = () => {
         </ul>
 
         {/* Social Icons for Small Screen (Retained from previous version) */}
-        <div className="flex justify-center gap-8 border-t border-white/10 pt-8 mt-12 w-3/4">
+        <div className={`flex justify-center gap-8 border-t pt-8 mt-12 w-3/4 ${theme === 'dark' ? 'border-white/10' : 'border-black/10'}`}>
           {socialLinks.map((social, index) => (
             <a
               key={index}
@@ -244,7 +273,7 @@ const Navbar = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
-              className="mobile-social text-white/80 hover:text-teal-400 transition"
+              className={`mobile-social hover:text-teal-400 transition ${theme === 'dark' ? 'text-white/80' : 'text-black/80'}`}
               onClick={() => setIsMenuOpen(false)}
             >
               <social.icon size={30} />

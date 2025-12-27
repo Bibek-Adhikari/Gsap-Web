@@ -27,16 +27,16 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-zinc-950 text-white border-t border-teal-400/20">
-      
+    <footer className="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white border-t border-teal-400/20">
+
       <div className="max-w-7xl mx-auto px-6 md:px-16 py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
-        
+
         {/* 1. Brand & Description */}
         <div className="md:col-span-2">
           <h2 className="text-3xl font-bold mb-3 text-teal-400">
             Bibek.
           </h2>
-          <p className="text-white/70 max-w-sm">
+          <p className="text-zinc-600 dark:text-white/70 max-w-sm">
             Frontend developer focused on building modern, animated,
             and user-friendly web experiences using React, GSAP, and Tailwind CSS.
           </p>
@@ -47,11 +47,11 @@ const Footer = () => {
           <h3 className="text-sm font-semibold uppercase tracking-widest mb-4 text-teal-300">
             Navigation
           </h3>
-          <ul className="space-y-3 text-white/70">
+          <ul className="space-y-3 text-zinc-600 dark:text-white/70">
             {quickLinks.map((link) => (
               <li key={link.name}>
-                <a 
-                  href={`#${link.href}`} 
+                <a
+                  href={`#${link.href}`}
                   // Ensure anchor links are used for single-page navigation
                   className="hover:text-teal-400 transition"
                 >
@@ -67,7 +67,7 @@ const Footer = () => {
           <h3 className="text-sm font-semibold uppercase tracking-widest mb-4 text-teal-300">
             Connect
           </h3>
-          <div className="flex flex-col gap-3 text-white/70">
+          <div className="flex flex-col gap-3 text-zinc-600 dark:text-white/70">
             {socialLinks.map((social) => (
               <a
                 key={social.label}
@@ -85,8 +85,8 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar & Back to Top */}
-      <div className="relative border-t border-teal-400/20 py-4 text-center text-sm text-white/50">
-        
+      <div className="relative border-t border-teal-400/20 py-4 text-center text-sm text-zinc-400 dark:text-white/50">
+
         {/* Back to Top Button */}
         <button
           onClick={handleBackToTop}
@@ -95,7 +95,7 @@ const Footer = () => {
         >
           <ArrowUp size={20} />
         </button>
-        
+
         {/* Copyright */}
         <p>
           © {new Date().getFullYear()} <span className='text-teal-400'>Bibek Adhikari</span>. Designed & Developed by Bibek.

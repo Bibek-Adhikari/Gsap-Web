@@ -103,14 +103,14 @@ const Services = () => {
   };
 
   return (
-    <section className="bg-zinc-950 text-white px-6 md:px-16 py-20" id='services'>
+    <section className="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white px-6 md:px-16 py-20" id='services'>
 
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-12">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
           Services
         </h1>
-        <p className="mt-4 text-white/70 max-w-2xl">
+        <p className="mt-4 text-zinc-600 dark:text-white/70 max-w-2xl">
           I help individuals and businesses build clean, modern,
           and interactive web experiences.
         </p>
@@ -126,7 +126,7 @@ const Services = () => {
             <h2 className="text-xl font-semibold mb-3 text-teal-400">
               {service.title}
             </h2>
-            <p className="text-white/70 leading-relaxed">
+            <p className="text-zinc-600 dark:text-white/70 leading-relaxed">
               {service.desc}
             </p>
           </div>
@@ -160,7 +160,7 @@ const Services = () => {
                   color={skill.color}
                   className="hover:scale-110 transition duration-300"
                 />
-                <span className='ml-3 text-lg font-semibold text-white/90 hidden sm:inline-block'>
+                <span className='ml-3 text-lg font-semibold text-zinc-800 dark:text-white/90 hidden sm:inline-block'>
                   {skill.label}
                 </span>
               </div>

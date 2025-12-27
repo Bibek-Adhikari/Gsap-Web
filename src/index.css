@@ -2,6 +2,9 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 @font-face {
   font-family: "Modern Negra";
   src: url("/fonts/Modern Negra Demo.ttf") format("truetype");
@@ -15,13 +18,25 @@
   --font-serif: "DM Serif Text", serif;
 }
 
+:root {
+  --bg-primary: #ffffff;
+  --text-primary: #000000;
+}
+
+.dark {
+  --bg-primary: #000000;
+  --text-primary: #ffffff;
+}
+
 html,
 body {
   width: 100%;
-  background-color: black;
-  color: white;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   scroll-behavior: smooth;
   overflow-x: hidden;
+  transition-property: background-color, color;
+  transition-duration: 300ms;
 }
 
 @utility flex-center {
@@ -78,6 +93,7 @@ strong {
 #img {
   filter: drop-shadow(0 0 0.15rem #23f0dfd2);
 }
+
 a {
   color: inherit;
   text-decoration: none;
