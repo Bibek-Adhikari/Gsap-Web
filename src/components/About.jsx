@@ -44,7 +44,7 @@ const BentoTile = ({ className = '', children, hoverFlip = false }) => {
     }
   }, [hoverFlip]);
 
-  const baseClasses = "relative bg-zinc-900 border border-teal-400/20 p-6 rounded-xl transition duration-300 shadow-xl cursor-pointer";
+  const baseClasses = "relative bg-white dark:bg-zinc-900 border border-teal-400/20 p-6 rounded-xl transition duration-300 shadow-xl cursor-pointer";
 
   return (
     <div

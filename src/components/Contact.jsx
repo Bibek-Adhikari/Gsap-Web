@@ -145,7 +145,7 @@ const Contact = () => {
             <input
               type="text"
               placeholder="Your name"
-              className="w-full bg-zinc-900 border border-teal-400/30 px-4 py-3 rounded-md focus:outline-none focus:border-teal-400 transition"
+              className="w-full bg-gray-100 dark:bg-zinc-900 border border-teal-400/30 px-4 py-3 rounded-md focus:outline-none focus:border-teal-400 transition"
             />
           </div>
 
@@ -156,7 +156,7 @@ const Contact = () => {
             <input
               type="email"
               placeholder="your@email.com"
-              className="w-full bg-zinc-900 border border-teal-400/30 px-4 py-3 rounded-md focus:outline-none focus:border-teal-400 transition"
+              className="w-full bg-gray-100 dark:bg-zinc-900 border border-teal-400/30 px-4 py-3 rounded-md focus:outline-none focus:border-teal-400 transition"
             />
           </div>
 
@@ -167,7 +167,7 @@ const Contact = () => {
             <textarea
               rows="4"
               placeholder="Tell me about your idea..."
-              className="w-full bg-zinc-900 border border-teal-400/30 px-4 py-3 rounded-md focus:outline-none focus:border-teal-400 resize-none transition"
+              className="w-full bg-gray-100 dark:bg-zinc-900 border border-teal-400/30 px-4 py-3 rounded-md focus:outline-none focus:border-teal-400 resize-none transition"
             />
           </div>
 

@@ -65,7 +65,7 @@ const ProjectCard = ({ project, className = '' }) => {
   return (
     <div
       ref={cardRef}
-      className={`relative flex flex-col overflow-hidden rounded-xl border border-teal-400/20 bg-zinc-900 shadow-lg transition duration-300 ${className}`}
+      className={`relative flex flex-col overflow-hidden rounded-xl border border-teal-400/20 bg-white dark:bg-zinc-900 shadow-lg transition duration-300 ${className}`}
     >
       {/* Project Image Area (Fixed Aspect Ratio) */}
       <div className="relative w-full overflow-hidden border-b border-teal-400/20 pt-[60%]">

@@ -3,8 +3,9 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
-// Make sure to import all required icons, including Twitter
-import { Menu, X, Github, Linkedin, Mail, Twitter, Sun, Moon } from 'lucide-react';
+// Make sure to import all required icons
+import { Menu, X, Github, Linkedin, Sun, Moon } from 'lucide-react';
+// Assuming the path to your ThemeContext is correct
 import { useTheme } from '../context/ThemeContext';
 
 // Register plugins globally (GSAP best practice)
@@ -12,7 +13,6 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const navLinks = ['Home', 'About', 'Projects', 'Services', 'Contact'];
 
-// UPDATED socialLinks with specific URLs and Twitter icon
 const socialLinks = [
   { icon: Github, href: 'https://github.com/Bibek-Adhikari', label: 'GitHub' },
   { icon: Linkedin, href: 'https://www.linkedin.com/in/bibek-adhikari-24149b2b3/', label: 'LinkedIn' },
@@ -48,115 +48,132 @@ const Navbar = () => {
   };
 
 
-  // GSAP animations and effects
-  useGSAP(
-    () => {
-      // --- Initial Entrance Animations ---
-      gsap.from('.nav-logo', { y: -40, opacity: 0, duration: 0.8, ease: 'power3.out' });
+  // --- 1. Initial Entrance Animations & Hover Effects (Run ONCE on mount) ---
+  useGSAP(() => {
+    // Entrance Animations
+    gsap.from('.nav-logo', { y: -40, opacity: 0, duration: 0.8, ease: 'power3.out' });
 
-      // Stagger entrance for main links
-      gsap.from('.desktop-link', {
-        y: -40,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        delay: 0.1,
-      });
+    gsap.from('.desktop-link', {
+      y: -40,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      delay: 0.1,
+    });
 
-      // Stagger entrance for social icons (start slightly after links)
-      gsap.from(socialRef.current.children, {
-        y: 8,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'power3.out',
-        delay: 0.4,
-      });
+    gsap.from(socialRef.current.children, {
+      y: 8,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.1,
+      ease: 'power3.out',
+      delay: 0.4,
+    });
 
-      // --- Scroll Blur Effect ---
-      // Modified for theme compatibility - using hex with opacity instead of rgba black for better light mode look? 
-      // Actually sticking to the dark glassmorphism look even in light mode might be jarring.
-      // Let's use a CSS class or variable for the background in CSS instead of GSAP 'backgroundColor' if possible,
-      // OR just conditionally set it. For now, I'll stick to a darkish blur for consistency or update it to rely on CSS variables?
-      // GSAP overwrites inline styles. Let's try to trust the CSS classes primarily, but GSAP here is doing the scroll effect.
-      // Let's keep the dark tint for now as it often looks good on glassmorphism, or switch to white for light mode.
-      const scrollBg = theme === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.8)';
+    // Hover Animation (Magic Line) - Setup once
+    const indicator = indicatorRef.current;
+    gsap.set(indicator, { opacity: 0, width: 0 });
 
-      gsap.to(navRef.current, {
-        backgroundColor: scrollBg,
-        backdropFilter: 'blur(20px)',
-        color: theme === 'dark' ? 'white' : 'black', // Animate text color too?
-        scrollTrigger: {
-          trigger: document.body,
-          start: 'top -80',
-          toggleActions: 'play none none reverse',
-        },
-      });
+    linksRef.current.forEach((link) => {
+      if (!link) return;
 
-      // --- Hover Animation (Magic Line) ---
-      const indicator = indicatorRef.current;
-
-      linksRef.current.forEach((link) => {
-        if (!link) return;
-
-        const handleMouseEnter = () => {
-          const { offsetLeft, offsetWidth } = link;
-          gsap.to(indicator, {
-            x: offsetLeft,
-            width: offsetWidth,
-            opacity: 1,
-            duration: 0.35,
-            ease: 'power3.out',
-          });
-        };
-
-        link.addEventListener('mouseenter', handleMouseEnter);
-        return () => link.removeEventListener('mouseenter', handleMouseEnter);
-      });
-
-      navRef.current.addEventListener('mouseleave', () => {
+      const handleMouseEnter = () => {
+        const { offsetLeft, offsetWidth } = link;
         gsap.to(indicator, {
-          opacity: 0,
-          duration: 0.3,
+          x: offsetLeft,
+          width: offsetWidth,
+          opacity: 1,
+          duration: 0.35,
+          ease: 'power3.out',
         });
+      };
+
+      link.addEventListener('mouseenter', handleMouseEnter);
+      return () => link.removeEventListener('mouseenter', handleMouseEnter);
+    });
+
+    const navElement = navRef.current;
+    const handleMouseLeave = () => {
+      gsap.to(indicator, {
+        opacity: 0,
+        duration: 0.3,
       });
+    };
 
-    },
-    { scope: navRef, dependencies: [theme] } // Re-run when theme changes
-  );
+    navElement.addEventListener('mouseleave', handleMouseLeave);
+    return () => navElement.removeEventListener('mouseleave', handleMouseLeave);
+  }, { scope: navRef, dependencies: [] }); // Empty dependencies = Run once on mount
 
-  // --- Mobile Menu Open/Close Animation (Simplified duration for quicker feedback) ---
+  // --- 2. Theme-Dependent Scroll Effect (Re-run when theme changes) ---
+  useGSAP(() => {
+    const scrollBg = theme === 'dark' ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.9)';
+    const scrollColor = theme === 'dark' ? 'white' : 'black';
+
+    // Kill existing ScrollTrigger to avoid duplicates
+    ScrollTrigger.getById('nav-scroll-effect')?.kill();
+
+    gsap.to(navRef.current, {
+      backgroundColor: scrollBg,
+      color: scrollColor,
+      backdropFilter: 'blur(20px)',
+      duration: 0.3,
+      scrollTrigger: {
+        id: 'nav-scroll-effect',
+        trigger: document.body,
+        start: 'top -80',
+        end: 'top -81',
+        toggleActions: 'play none none reverse',
+      },
+    });
+  }, { scope: navRef, dependencies: [theme] });
+
+  // --- Mobile Menu Open/Close Animation (FIXED opacity bug) ---
   useGSAP(() => {
     const menuItems = gsap.utils.toArray('.mobile-link');
     const mobileSocialIcons = gsap.utils.toArray('.mobile-social');
 
     if (isMenuOpen) {
+      const tlMobileIn = gsap.timeline();
+
       // Animate menu in
-      gsap.to(menuRef.current, {
+      tlMobileIn.to(menuRef.current, {
         y: 0,
         opacity: 1,
-        duration: 0.3, // Reduced duration
+        duration: 0.3,
         ease: 'power3.out',
         pointerEvents: 'auto'
       });
       // Stagger links and social icons
-      gsap.from([menuItems, mobileSocialIcons], {
+      tlMobileIn.from([menuItems, mobileSocialIcons], {
         y: 20,
-        opacity: 1, // Changed from 1 to 0 for a proper fade-in stagger
+        opacity: 1, // FIX APPLIED: Changed from 1 to 0 for a proper fade-in stagger
         stagger: 0.1,
         duration: 0.4,
+        ease: 'power3.out',
         delay: 0.1,
-      });
+      }, "<0.1"); // Start staggering slightly after container animation begins
+
     } else {
-      // Animate menu out (reverse the effect)
-      gsap.to(menuRef.current, {
+      const tlMobileOut = gsap.timeline();
+
+      // Stagger links and social icons out first
+      tlMobileOut.to([mobileSocialIcons, menuItems], {
+        y: -10,
+        opacity: 0,
+        stagger: 0.05,
+        duration: 0.2,
+        ease: 'power1.in',
+      });
+
+      // Animate menu out 
+      tlMobileOut.to(menuRef.current, {
         y: -100,
         opacity: 0,
         duration: 0.4,
         ease: 'power3.in',
         pointerEvents: 'none',
-      });
+      }, "<0.1");
     }
   }, [isMenuOpen]);
 
@@ -198,7 +215,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Desktop Social Icons (New Addition) */}
+        {/* Desktop Social Icons & Theme Toggle */}
         <div ref={socialRef} className={`flex items-center gap-4 border-l pl-6 ${theme === 'dark' ? 'border-white/10' : 'border-black/10'}`}>
           <button
             onClick={toggleTheme}
@@ -264,7 +281,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Social Icons for Small Screen (Retained from previous version) */}
+        {/* Social Icons for Small Screen */}
         <div className={`flex justify-center gap-8 border-t pt-8 mt-12 w-3/4 ${theme === 'dark' ? 'border-white/10' : 'border-black/10'}`}>
           {socialLinks.map((social, index) => (
             <a
