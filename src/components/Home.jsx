@@ -57,7 +57,7 @@ const Home = () => {
                 const startY = index % 2 === 0 ? '-100vh' : '100vh';
 
                 gsap.fromTo(icon,
-                    { x: startX, y: startY, opacity: 0, rotation: random(-360, 360), scale: 0.5 },
+                    { x: startX, y: startY, opacity: 0, rotation: random(-360, 360), scale: 1 },
                     {
                         // Target a small random position in the center
                         x: random(-50, 50),
@@ -81,7 +81,7 @@ const Home = () => {
 
             // Continuous Image Floating Animation (Existing)
             gsap.to(imageRef.current, {
-                y: -20,
+                y: 20,
                 duration: 2.5,
                 repeat: -1,
                 yoyo: true,
@@ -164,7 +164,7 @@ const Home = () => {
             </div>
 
             {/* Scroll Indicator */}
-            <div className="absolute bottom-12 text-sm text-white/70 z-10 animate-pulse">
+            <div className="absolute bottom-12 text-sm text-white/70 z-10 animate-pulse" ref={imageRef}>
                 ↓ Scroll Down
             </div>
         </section>

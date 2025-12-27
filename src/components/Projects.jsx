@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { GithubIcon, LinkIcon } from 'lucide-react'; // Assuming you have lucide-react or similar icons
+import { Github, Link } from 'lucide-react'; // Assuming you have lucide-react or similar icons
 
 // Add image placeholders and GitHub links to your project data
 const projects = [
@@ -106,7 +106,7 @@ const ProjectCard = ({ project, className = '' }) => {
             rel="noopener noreferrer"
             className="flex items-center text-sm font-medium text-white hover:text-teal-400 transition"
           >
-            <LinkIcon className="h-4 w-4 mr-1" />
+            <Link className="h-4 w-4 mr-1" />
             Live Demo
           </a>
           <a
@@ -115,7 +115,7 @@ const ProjectCard = ({ project, className = '' }) => {
             rel="noopener noreferrer"
             className="flex items-center text-sm font-medium text-white hover:text-teal-400 transition"
           >
-            <GithubIcon className="h-4 w-4 mr-1" />
+            <Github className="h-4 w-4 mr-1" />
             GitHub
           </a>
         </div>
@@ -131,7 +131,7 @@ const Projects = () => {
 
   return (
     <section className="min-h-screen bg-zinc-950 text-white px-6 md:px-16 py-20" id='projects'>
-      
+
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-12 projects-header">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-teal-400">
@@ -144,7 +144,7 @@ const Projects = () => {
       </div>
 
       {/* Projects Grid */}
-      <div 
+      <div
         ref={gridContainerRef}
         className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6"
       >
@@ -152,7 +152,7 @@ const Projects = () => {
           <ProjectCard
             key={index}
             project={project}
-            // Use aspect-square or a defined h-full to make them same size (already handled by grid)
+          // Use aspect-square or a defined h-full to make them same size (already handled by grid)
           />
         ))}
       </div>
