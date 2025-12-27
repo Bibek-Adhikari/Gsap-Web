@@ -55,7 +55,7 @@ const Navbar = () => {
 
     gsap.from('.desktop-link', {
       y: -40,
-      opacity: 0,
+      opacity: 1,
       duration: 0.8,
       stagger: 0.15,
       ease: 'power3.out',
@@ -64,7 +64,7 @@ const Navbar = () => {
 
     gsap.from(socialRef.current.children, {
       y: 8,
-      opacity: 0,
+      opacity: 1,
       duration: 0.6,
       stagger: 0.1,
       ease: 'power3.out',
@@ -73,7 +73,7 @@ const Navbar = () => {
 
     // Hover Animation (Magic Line) - Setup once
     const indicator = indicatorRef.current;
-    gsap.set(indicator, { opacity: 0, width: 0 });
+    gsap.set(indicator, { opacity: 1, width: 0 });
 
     linksRef.current.forEach((link) => {
       if (!link) return;
@@ -96,7 +96,7 @@ const Navbar = () => {
     const navElement = navRef.current;
     const handleMouseLeave = () => {
       gsap.to(indicator, {
-        opacity: 0,
+        opacity: 1,
         duration: 0.3,
       });
     };
@@ -159,8 +159,8 @@ const Navbar = () => {
 
       // Stagger links and social icons out first
       tlMobileOut.to([mobileSocialIcons, menuItems], {
-        y: -10,
-        opacity: 0,
+        y: -5,
+        opacity: 1,
         stagger: 0.05,
         duration: 0.2,
         ease: 'power1.in',
