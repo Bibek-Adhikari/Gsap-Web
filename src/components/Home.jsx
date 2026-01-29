@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
+
 // Utility function to generate a random number within a range
 const random = (min, max) => Math.random() * (max - min) + min;
 

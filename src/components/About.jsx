@@ -142,7 +142,7 @@ const About = () => {
         <BentoTile hoverFlip>
           <h2 className="text-xl font-semibold mb-3 text-teal-300">Education</h2>
           <p className="text-zinc-600 dark:text-white/70">
-            Class 12 Student <br />
+            BCA 1st Sem Student <br />
             <span className="font-medium text-teal-400">Computer & Accountancy</span>
           </p>
           <div className="absolute bottom-4 right-6 text-5xl opacity-10">📚</div>
