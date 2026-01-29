@@ -156,7 +156,7 @@ const Home = () => {
                 <div className="flex justify-center relative order-1 md:order-2">
                     <img
                         ref={imageRef}
-                        src="../public/me.png"
+                        src="https://github.com/Bibek-Adhikari/Gsap-Web/blob/main/public/me.png?raw=true"
                         alt="Developer Portrait"
                         className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 object-cover rounded-full aspect-square border-4 border-teal-500 shadow-2xl"
                         id='img'
