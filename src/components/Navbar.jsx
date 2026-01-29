@@ -53,7 +53,7 @@ const Navbar = ({ offsetY = NAVBAR_HEIGHT }) => {
       </a>
 
       {/* Desktop */}
-      <div className="hidden md:flex items-center gap-8">
+      <div className="hidden md:flex items-center gap-8 cursor:pointer">
         <ul className="relative flex gap-8">
           <span
             ref={indicatorRef}
@@ -76,7 +76,7 @@ const Navbar = ({ offsetY = NAVBAR_HEIGHT }) => {
         <div
           ref={socialRef}
           className="flex items-center gap-4 border-l pl-6
-          dark:border-white/10 border-black/10"
+          dark:border-white/10 border-black/10 "
         >
           <button onClick={toggleTheme}>
             {theme === 'dark' ? <Sun /> : <Moon />}
@@ -91,7 +91,7 @@ const Navbar = ({ offsetY = NAVBAR_HEIGHT }) => {
       </div>
 
       {/* Mobile */}
-      <div className="md:hidden flex items-center gap-3">
+      <div className="md:hidden flex items-center gap-3 cursor:pointer">
         <button onClick={toggleTheme}>
           {theme === 'dark' ? <Sun /> : <Moon />}
         </button>
