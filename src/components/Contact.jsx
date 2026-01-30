@@ -270,7 +270,7 @@ const Contact = () => {
           )}
 
           <p className="text-xs text-zinc-500 dark:text-white/40">
-            (End To End Encription)
+            (End To End Encryption)
           </p>
         </form>
       </div>
