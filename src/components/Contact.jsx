@@ -7,11 +7,21 @@ gsap.registerPlugin(useGSAP);
 
 const CONTACT_EMAIL = "crazybibek4444@email.com";
 
+// Netlify encode helper
+const encode = (data) =>
+  Object.keys(data)
+    .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k]))
+    .join("&");
+
 const Contact = () => {
   const [isCopied, setIsCopied] = useState(false);
   const contactRef = useRef(null);
   const copyMessageRef = useRef(null);
   const timeoutRef = useRef(null);
+
+  // ✅ Form state for Netlify
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
 
   useGSAP(
     () => {
@@ -70,6 +80,31 @@ const Contact = () => {
     }
   };
 
+  // ✅ Form change handler
+  const onChange = (e) => {
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  };
+
+  // ✅ Netlify submit handler (AJAX)
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({ "form-name": "contact", ...form }),
+      });
+
+      setStatus("success");
+      setForm({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+    }
+  };
+
   return (
     <section
       ref={contactRef}
@@ -101,7 +136,6 @@ const Contact = () => {
           </p>
 
           <dl className="space-y-4 text-zinc-700 dark:text-white/80">
-            {/* on mobile: stacked; on sm+: label/value row */}
             <div className="grid grid-cols-1 sm:grid-cols-[90px_1fr] gap-1 sm:gap-3">
               <dt className="text-zinc-500 dark:text-white/50">Name</dt>
               <dd className="font-medium">Bibek Adhikari</dd>
@@ -116,7 +150,6 @@ const Contact = () => {
             <div className="grid grid-cols-1 sm:grid-cols-[90px_1fr] gap-1 sm:gap-3">
               <dt className="text-zinc-500 dark:text-white/50">Email</dt>
 
-              {/* IMPORTANT: min-w-0 + break-all prevents overflow on mobile */}
               <dd className="min-w-0">
                 <div className="relative inline-flex max-w-full items-center gap-2 rounded-full bg-teal-500/10 px-3 py-2">
                   <a
@@ -149,17 +182,34 @@ const Contact = () => {
           </dl>
         </div>
 
-        {/* Right box: form */}
+        {/* ✅ Right box: Netlify working form */}
         <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          onSubmit={onSubmit}
           className="contact-box rounded-2xl border border-teal-400/20 bg-white/60 dark:bg-zinc-950/40 backdrop-blur p-5 sm:p-6 space-y-4 sm:space-y-5"
-          onSubmit={(e) => e.preventDefault()}
         >
+          {/* Netlify required hidden fields */}
+          <input type="hidden" name="form-name" value="contact" />
+          <p className="hidden">
+            <label>
+              Don’t fill this out:{" "}
+              <input name="bot-field" onChange={onChange} />
+            </label>
+          </p>
+
           <div>
             <label className="block text-sm font-medium text-teal-300 mb-1">
               Name
             </label>
             <input
+              name="name"
               type="text"
+              required
+              value={form.name}
+              onChange={onChange}
               placeholder="Your name"
               className="w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/70 border border-teal-400/25 px-4 py-3 text-sm sm:text-base
                          focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition"
@@ -171,7 +221,11 @@ const Contact = () => {
               Email
             </label>
             <input
+              name="email"
               type="email"
+              required
+              value={form.email}
+              onChange={onChange}
               placeholder="your@email.com"
               className="w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/70 border border-teal-400/25 px-4 py-3 text-sm sm:text-base
                          focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition"
@@ -183,7 +237,11 @@ const Contact = () => {
               Message
             </label>
             <textarea
+              name="message"
               rows={5}
+              required
+              value={form.message}
+              onChange={onChange}
               placeholder="Tell me about your idea..."
               className="w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/70 border border-teal-400/25 px-4 py-3 text-sm sm:text-base
                          focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 resize-none transition"
@@ -192,14 +250,27 @@ const Contact = () => {
 
           <button
             type="submit"
+            disabled={status === "sending"}
             className="w-full rounded-lg bg-teal-500 text-black font-bold py-3
-                       hover:bg-teal-600 active:scale-[0.99] transition shadow-lg shadow-teal-500/20"
+                       hover:bg-teal-600 active:scale-[0.99] transition shadow-lg shadow-teal-500/20 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Send Message
+            {status === "sending" ? "Sending..." : "Send Message"}
           </button>
 
+          {status === "success" && (
+            <p className="text-sm text-teal-400 font-medium">
+              Sent ✅ I’ll get back to you soon!
+            </p>
+          )}
+
+          {status === "error" && (
+            <p className="text-sm text-red-400 font-medium">
+              Failed ❌ Please try again.
+            </p>
+          )}
+
           <p className="text-xs text-zinc-500 dark:text-white/40">
-            (Demo form — wire it to EmailJS / Formspree / your backend when ready.)
+            (Netlify Forms enabled)
           </p>
         </form>
       </div>
