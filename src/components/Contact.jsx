@@ -270,7 +270,7 @@ const Contact = () => {
           )}
 
           <p className="text-xs text-zinc-500 dark:text-white/40">
-            (Netlify Forms enabled)
+            (End To End Encription)
           </p>
         </form>
       </div>
