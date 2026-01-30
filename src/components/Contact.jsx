@@ -87,23 +87,26 @@ const Contact = () => {
 
   // ✅ Netlify submit handler (AJAX)
   const onSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("sending");
+  e.preventDefault();
+  setStatus("sending");
 
-    try {
-      await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({ "form-name": "contact", ...form }),
-      });
+  try {
+    const res = await fetch(window.location.pathname, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact", ...form }),
+    });
 
-      setStatus("success");
-      setForm({ name: "", email: "", message: "" });
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
-    }
-  };
+    if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+
+    setStatus("success");
+    setForm({ name: "", email: "", message: "" });
+  } catch (err) {
+    console.error(err);
+    setStatus("error");
+  }
+};
+
 
   return (
     <section
