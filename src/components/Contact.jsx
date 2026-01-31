@@ -92,10 +92,10 @@ const Contact = () => {
 
     try {
       await fetch(window.location.pathname, {
-  method: "POST",
-  headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  body: encode({ "form-name": "contact", ...form }),
-});
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({ "form-name": "contact", ...form }),
+      });
 
 
       setStatus("success");
@@ -185,21 +185,21 @@ const Contact = () => {
 
         {/* ✅ Right box: Netlify working form */}
         <form
-          name="contact"
+          action="https://formsubmit.co/crazybibek4444@email.com"
           method="POST"
-          data-netlify="true"
-          data-netlify-honeypot="bot-field"
-          onSubmit={onSubmit}
           className="contact-box rounded-2xl border border-teal-400/20 bg-white/60 dark:bg-zinc-950/40 backdrop-blur p-5 sm:p-6 space-y-4 sm:space-y-5"
         >
-          {/* Netlify required hidden fields */}
-          <input type="hidden" name="form-name" value="contact" />
-          <p className="hidden">
-            <label>
-              Don’t fill this out:{" "}
-              <input name="bot-field" onChange={onChange} />
-            </label>
-          </p>
+          {/* FormSubmit settings */}
+          <input
+            type="hidden"
+            name="_subject"
+            value="New message from your portfolio website"
+          />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+
+          {/* Optional: redirect after submit */}
+          {/* <input type="hidden" name="_next" value="https://your-site.netlify.app/#contact" /> */}
 
           <div>
             <label className="block text-sm font-medium text-teal-300 mb-1">
@@ -209,11 +209,9 @@ const Contact = () => {
               name="name"
               type="text"
               required
-              value={form.name}
-              onChange={onChange}
               placeholder="Your name"
               className="w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/70 border border-teal-400/25 px-4 py-3 text-sm sm:text-base
-                         focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition"
+                 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition"
             />
           </div>
 
@@ -225,11 +223,11 @@ const Contact = () => {
               name="email"
               type="email"
               required
-              value={form.email}
-              onChange={onChange}
+              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+              title="Please enter a valid email address (example: name@gmail.com)"
               placeholder="your@email.com"
               className="w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/70 border border-teal-400/25 px-4 py-3 text-sm sm:text-base
-                         focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition"
+                 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition"
             />
           </div>
 
@@ -241,39 +239,26 @@ const Contact = () => {
               name="message"
               rows={5}
               required
-              value={form.message}
-              onChange={onChange}
               placeholder="Tell me about your idea..."
               className="w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/70 border border-teal-400/25 px-4 py-3 text-sm sm:text-base
-                         focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 resize-none transition"
+                 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 resize-none transition"
             />
           </div>
 
           <button
             type="submit"
-            disabled={status === "sending"}
             className="w-full rounded-lg bg-teal-500 text-black font-bold py-3
-                       hover:bg-teal-600 active:scale-[0.99] transition shadow-lg shadow-teal-500/20 disabled:opacity-60 disabled:cursor-not-allowed"
+               hover:bg-teal-600 active:scale-[0.99] transition shadow-lg shadow-teal-500/20"
           >
-            {status === "sending" ? "Sending..." : "Send Message"}
+            Send Message
           </button>
 
-          {status === "success" && (
-            <p className="text-sm text-teal-400 font-medium">
-              Sent ✅ I’ll get back to you soon!
-            </p>
-          )}
-
-          {status === "error" && (
-            <p className="text-sm text-red-400 font-medium">
-              Failed ❌ Please try again.
-            </p>
-          )}
-
           <p className="text-xs text-zinc-500 dark:text-white/40">
-            (End To End Encryption)
+            (Sends directly to Gmail)
           </p>
         </form>
+
+
       </div>
     </section>
   );
